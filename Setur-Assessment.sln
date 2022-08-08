@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactService", "ContactService\ContactService.csproj", "{F0B496C5-64B2-4150-B42E-C43D29B4A1D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService", "ReportService\ReportService.csproj", "{19670EDA-B12A-49B5-AD93-80E7DBBA553C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0B496C5-64B2-4150-B42E-C43D29B4A1D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0B496C5-64B2-4150-B42E-C43D29B4A1D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0B496C5-64B2-4150-B42E-C43D29B4A1D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0B496C5-64B2-4150-B42E-C43D29B4A1D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19670EDA-B12A-49B5-AD93-80E7DBBA553C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19670EDA-B12A-49B5-AD93-80E7DBBA553C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19670EDA-B12A-49B5-AD93-80E7DBBA553C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19670EDA-B12A-49B5-AD93-80E7DBBA553C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DC57194-8661-4B09-9686-61BB75970E67}
+	EndGlobalSection
+EndGlobal
