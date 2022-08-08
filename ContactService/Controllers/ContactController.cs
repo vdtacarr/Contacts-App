@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Common.Models;
+using ContactService.Model;
+using ContactService.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,31 +12,28 @@ namespace ContactService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class ContactController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly MongoService _mongoService;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public ContactController(MongoService mongoService)
         {
-            _logger = logger;
+            _mongoService = mongoService;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpPost()]
+        [Route("add-person")]
+        public async Task<IActionResult> AddContact([FromBody] ContactDto contact)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+           await _mongoService.CreateAsync(contact);
+            return Ok();
         }
+        [HttpGet()]
+        [Route("get-contacts")]
+        public async Task<List<Contact>> GetAllContacts()
+        {
+            return await _mongoService.GetAsync();
+        }
+
     }
 }
