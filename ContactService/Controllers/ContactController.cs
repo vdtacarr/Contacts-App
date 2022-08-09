@@ -25,8 +25,16 @@ namespace ContactService.Controllers
         [Route("add-person")]
         public async Task<IActionResult> AddContact([FromBody] ContactDto contact)
         {
-           await _mongoService.CreateAsync(contact);
-            return Ok();
+            try
+            {
+                await _mongoService.CreateAsync(contact);
+                return Ok("Başarılı bir şekilde kaydedildi");
+            }
+
+            catch
+            {
+                return BadRequest("Beklenmeyen bir hata oluştu");
+            }
         }
         [HttpGet()]
         [Route("get-contacts")]
@@ -35,5 +43,8 @@ namespace ContactService.Controllers
             return await _mongoService.GetAsync();
         }
 
+        [HttpPost()]
+        [Route("add-contact-info")]
+        public async Task
     }
 }
