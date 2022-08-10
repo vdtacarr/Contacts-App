@@ -7,15 +7,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using ReportService.Services.Concrete;
+using ProcessService.Customer;
+using ProcessService.Models;
+using ProcessService.Services;
+using Shared;
+using Shared.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-namespace ReportService
+namespace ProcessService
 {
     public class Startup
     {
@@ -29,23 +31,17 @@ namespace ReportService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
+            services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDbSettings"));
             services.AddSingleton<MongoService>();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "Implement Swagger UI",
-                    Description = "A simple example to Implement Swagger UI",
-                });
-            });
 
             services.AddMassTransit(configure =>
             {
+                configure.AddConsumer<ReportPrepearedEventConsumer>();
+
                 configure.UsingRabbitMq((context, configurator) =>
                 {
                     configurator.Host(Configuration.GetConnectionString("RabbitMQ"));
+                    configurator.ReceiveEndpoint(RabbitMQSettings.ReportCreatedEventQueue, e => e.ConfigureConsumer<ReportPrepearedEventConsumer>(context));
                 });
             });
 
@@ -59,12 +55,7 @@ namespace ReportService
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSwagger();
 
-            app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Showing API V1");
-            });
-            
             app.UseHttpsRedirection();
 
             app.UseRouting();
