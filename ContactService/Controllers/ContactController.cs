@@ -1,4 +1,4 @@
-﻿using Common.Models;
+﻿using Shared.Models;
 using ContactService.Model;
 using ContactService.Services;
 using Microsoft.AspNetCore.Mvc;

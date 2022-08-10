@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Common.Models;
+using Shared.Models;
 using ContactService.Model;
 using ContactService.Models.Concrete;
 using Microsoft.Extensions.Options;
