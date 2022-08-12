@@ -30,8 +30,8 @@ namespace ContactService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
-            services.AddSingleton<MongoService>();
+            services.Configure<MongoDbSettingsContact>(Configuration.GetSection("MongoDbSettings"));
+            services.AddSingleton<ContactMongoService>();
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddSwaggerGen(c =>

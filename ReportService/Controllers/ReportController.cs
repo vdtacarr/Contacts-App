@@ -14,10 +14,10 @@ namespace ReportService.Controllers
     [Route("[controller]")]
     public class ReportController : ControllerBase
     {
-        private readonly MongoService _mongoService;
+        private readonly ReportMongoService _mongoService;
         readonly IPublishEndpoint _publishEndpoint;
 
-        public ReportController(MongoService mongoService, IPublishEndpoint publishEndpoint)
+        public ReportController(ReportMongoService mongoService, IPublishEndpoint publishEndpoint)
         {
             _mongoService = mongoService;
             _publishEndpoint = publishEndpoint;
@@ -31,25 +31,42 @@ namespace ReportService.Controllers
             {
                 var reportCreatedEvent = await _mongoService.CreateReportAsync();
                 await _publishEndpoint.Publish(reportCreatedEvent);
-                return Ok("Başarılı bir şekilde rapor oluşturuldu.");
+                return Ok($"{reportCreatedEvent.Id} idli rapor oluşturuluyor...");
 
             }
             catch(Exception ex)
             {
-                return BadRequest("Bilinmeyen bir hata oluştu.");
+                return StatusCode(500, "Bilinmeyen bir hata oluştu.");
             }
         }
         [HttpGet]
         [Route("get-all-reports")]
-        public async Task<List<Report>> GetAllReports()
+        public async Task<ActionResult<List<Report>>> GetAllReports()
         {
-            return await _mongoService.GetAllReports();
+            try
+            {
+                return Ok(await _mongoService.GetAllReports());
+
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Beklenmeyen bir hata oluştu : {ex.Message}");
+            }
         }
         [HttpGet]
         [Route("get-one-report/{id}")]
-        public async Task<Report> GetOneReport(string id)
+        public async Task<ActionResult<Report>> GetSingleReport(string id)
         {
-            return await _mongoService.GetReportByIdAsync(id); 
+            try
+            {
+                return Ok(await _mongoService.GetReportByIdAsync(id));
+
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Beklenmeyen bir hata oluştu : {ex.Message}");
+
+            }
         }
     }
 }

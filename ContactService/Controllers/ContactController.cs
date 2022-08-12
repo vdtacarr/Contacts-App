@@ -1,12 +1,13 @@
 ﻿using Shared.Models;
 using ContactService.Model;
-using ContactService.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContactService.Services;
+using ContactService.Models.Concrete;
 
 namespace ContactService.Controllers
 {
@@ -14,20 +15,20 @@ namespace ContactService.Controllers
     [Route("[controller]")]
     public class ContactController : ControllerBase
     {
-        private readonly MongoService _mongoService;
+        private readonly ContactMongoService _contactService;
 
-        public ContactController(MongoService mongoService)
+        public ContactController(ContactMongoService contactService)
         {
-            _mongoService = mongoService;
+            _contactService = contactService;
         }
 
         [HttpPost]
-        [Route("add-person")]
+        [Route("add-contact")]
         public async Task<IActionResult> AddContact([FromBody] ContactDto contact)
         {
             try
             {
-                await _mongoService.CreateContactAsync(contact);
+                await _contactService.CreateContactAsync(contact);
                 return Ok("Başarılı bir şekilde kaydedildi");
             }
 
@@ -39,33 +40,57 @@ namespace ContactService.Controllers
 
         [HttpGet]
         [Route("get-contacts")]
-        public async Task<List<Contact>> GetAllContacts()
+        public async Task<ActionResult<List<Contact>>> GetAllContacts()
         {
-            return await _mongoService.GetContactsAsync();
+            try
+            {
+                var res = await _contactService.GetContactsAsync();
+                if(res.Count == 0)
+                {
+                    return Ok("Hiç Kayıt Yok!!");
+                }
+                else
+                {
+                    return Ok(res);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Beklenmeyen bir hata oluştu : {ex.Message}");
+            }
         }
 
         [HttpGet]
         [Route("get-contact-by-id/{id}")]
-        public async Task<Contact> GetContactByIdAsync(string id)
+        public async Task<ActionResult<Contact>> GetContactByIdAsync(string id)
         {
             try
             {
-                var res = await _mongoService.GetContactByIdAsync(id);
-                return res;
+                var res = await _contactService.GetContactByIdAsync(id);
+                if(res != null)
+                {
+                    return Ok(res);
+                }
+                else
+                {
+                    return BadRequest("Bu Idli kayıt yok!!");
+                }
+            
             }
             catch (Exception ex)
             {
-                return null;
+                return StatusCode(500, $"Beklenmeyen bir hata oluştu : {ex.Message}");
             }
         }
 
         [HttpPost]
         [Route("add-contact-info/{id}")]
-        public async Task<IActionResult> AddContactInfo(string id, [FromBody] ContactInfo info)
+        public async Task<IActionResult> AddContactInfo(string id, [FromBody] ContactInfoDto info)
         {
             try
             {
-                await _mongoService.UpdateContactAsync(id, info);
+                await _contactService.UpdateContactAsync(id, info);
                 return Ok("Kontak bilgisi başarılı bir şekilde eklendi.");
             }
 
@@ -81,28 +106,28 @@ namespace ContactService.Controllers
         {
             try
             {
-                await _mongoService.DeleteContactAsync(id);
+                await _contactService.DeleteContactAsync(id);
                 return Ok($"{id} idli kayıt başarıyla silindi");
             }
             catch (Exception ex)
             {
-                return BadRequest($"Beklenmeyen bir hata oluştu : {ex.Message}");
+                return BadRequest($"Bu idli kayıt yok: {ex.Message}");
             }
         }
 
         [HttpDelete]
-        [Route("delete-contact-info/{id}")]
-        public async Task<IActionResult> DeleteContactInfo(string id)
+        [Route("delete-contact-info/{contactId}/{contactInfoId}")]
+        public async Task<IActionResult> DeleteContactInfo(string contactId, string contactInfoId)
         {
             try
             {
-                await _mongoService.DeleteContactInfoAsync(id);
-                return Ok($"{id} idli kaydın kontak bilgisi başarılı bir şekilde kaldırıldı.");
+                await _contactService.DeleteContactInfoAsync(contactId, contactInfoId);
+                return Ok($"{contactId} idli kaydın kontak bilgisi başarılı bir şekilde kaldırıldı.");
 
             }
             catch (Exception ex)
             {
-                return BadRequest($"Beklenmeyen bir hata oluştu : {ex.Message}");
+                return BadRequest( $"Bu idli kayıt yok: {ex.Message}");
 
             }
         }

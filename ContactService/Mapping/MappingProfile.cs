@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContactService.Models.Concrete;
 
 namespace ContactService.Mapping
 {
@@ -14,6 +15,8 @@ namespace ContactService.Mapping
         {
             CreateMap<Contact, ContactDto>();
             CreateMap<ContactDto, Contact>();
+            CreateMap<ContactInfo, ContactInfoDto>();
+            CreateMap<ContactInfoDto, ContactInfo>();
         }
         
     }

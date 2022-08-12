@@ -8,14 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProcessService.Services
+namespace ProcessService
 {
-    public class MongoService
+    public class ProcessMongoService
     {
         private readonly IMongoCollection<Report> _reportCollection;
         private readonly IMongoCollection<Contact> _contactCollection;
 
-        public MongoService(IOptions<MongoDBSettings> mongoDBSettings)
+        public ProcessMongoService(IOptions<MongoDBSettings> mongoDBSettings)
         {
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI);
             IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
@@ -29,7 +29,7 @@ namespace ProcessService.Services
             List<Contact> contacts = await _contactCollection.Find(new BsonDocument()).ToListAsync();
             var groupedContacts = contacts
                 .Where(x => x.ContactInfo != null)
-                .GroupBy(x => x.ContactInfo.Location);
+                .GroupBy(x => x.ContactInfo.First().Location);
 
             #region Grouping
             if (groupedContacts.Any())

@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-
+using System.Collections.Generic;
 
 namespace Shared.Models
 {
@@ -12,7 +12,8 @@ namespace Shared.Models
         public string UserName { get; set; }
         public string UserSurname{ get; set; }
         public string Company { get; set; }
-        public ContactInfo ContactInfo { get; set; }
+
+        public List<ContactInfo> ContactInfo { get; set; } = new List<ContactInfo>();
 
 
     }

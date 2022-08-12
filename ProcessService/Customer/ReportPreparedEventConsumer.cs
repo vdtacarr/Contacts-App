@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using ProcessService.Services;
+using ProcessService;
 using Shared.Events;
 using System;
 using System.Collections.Generic;
@@ -10,8 +10,8 @@ namespace ProcessService.Customer
 {
     public class ReportPrepearedEventConsumer : IConsumer<ReportCreatedEvent>
     {
-        readonly MongoService _mongoService;
-        public ReportPrepearedEventConsumer(MongoService mongoService)
+        readonly ProcessMongoService _mongoService;
+        public ReportPrepearedEventConsumer(ProcessMongoService mongoService)
         {
             _mongoService = mongoService;
         }
