@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace ReportService.Services.Concrete
 {
 
-    public class MongoDbSettings
+    public class MongoDbSettingsReport
     {
         public string ConnectionURI { get; set; }
         public string DatabaseName { get; set; }

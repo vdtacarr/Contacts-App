@@ -29,8 +29,8 @@ namespace ReportService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
-            services.AddSingleton<MongoService>();
+            services.Configure<MongoDbSettingsReport>(Configuration.GetSection("MongoDbSettings"));
+            services.AddSingleton<ReportMongoService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo

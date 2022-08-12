@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace ReportService.Services.Concrete
 {
-    public class MongoService
+    public class ReportMongoService
     {
         private readonly IMongoCollection<Report> _reportCollection;
-        public MongoService(IOptions<MongoDbSettings> mongoDBSettings)
+        public ReportMongoService(IOptions<MongoDbSettingsReport> mongoDBSettings)
         {
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI);
             IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
@@ -51,7 +51,7 @@ namespace ReportService.Services.Concrete
         public async Task<Report> GetReportByIdAsync(string id)
         {
             FilterDefinition<Report> filter = Builders<Report>.Filter.Eq("Id", id);
-            return await _reportCollection.Find(filter).FirstOrDefaultAsync();
+            return await _reportCollection.Find(filter).FirstAsync();
         }
     }
 }

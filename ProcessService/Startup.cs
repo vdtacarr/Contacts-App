@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProcessService.Customer;
 using ProcessService.Models;
-using ProcessService.Services;
+using ProcessService;
 using Shared;
 using Shared.Events;
 using System;
@@ -32,7 +32,7 @@ namespace ProcessService
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDbSettings"));
-            services.AddSingleton<MongoService>();
+            services.AddSingleton<ProcessMongoService>();
 
             services.AddMassTransit(configure =>
             {
