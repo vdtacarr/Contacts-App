@@ -1,6 +1,7 @@
 # GuideBook App
-Technologies : MassTransit(RabbitMQ), MongoDB, Microservice Architecture (Contact Service, Report Service, Process Service), Swagger, Xunit(Unit Testing)</br>
-Specifications : This api allows to add contact , add contact info, delete contact, delete contact info and export report according to location which gives the counts f people in the same town.
+Technologies : MassTransit(RabbitMQ), MongoDB, Microservice Architecture (Contact Service, Report Service, Process Service), Swagger, Xunit(Unit Testing)</br></br>
+Specifications : This api allows to add contact , add contact info, delete contact, delete contact info and export report according to location which gives the counts f people in the same town.</br></br>
+
 #How to launch
 After downloading, navigate to solution (/Setur-Assessment), then run these three commands in console,
 - dotnet run --project ./ContactService/ContactService.csproj
