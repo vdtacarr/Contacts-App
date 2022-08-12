@@ -8,7 +8,7 @@ After downloading, navigate to solution (/Setur-Assessment), then run these thre
 - dotnet run --project ./ReportService/ReportService.csproj,
 - dotnet run --project ./ProcessService/ProcessService.csproj
 
-After that launch the browser and go to https://localhost:5001/swagger/index.html (Contact Service)  and https://localhost:5005/swagger/index.html (Report Service)
+After that launch the browser and go to https://localhost:5001/swagger/index.html (Contact Service)  and https://localhost:5005/swagger/index.html, </br></br>(Report Service)
 Process Service retrieve data from rabbitmq to not create bottleneck in the report service.
 
 After go to swagger UI, you will see the endpoints, 
