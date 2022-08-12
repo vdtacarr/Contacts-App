@@ -28,8 +28,8 @@ namespace ProcessService
 
             List<Contact> contacts = await _contactCollection.Find(new BsonDocument()).ToListAsync();
             var groupedContacts = contacts
-                .Where(x => x.ContactInfo != null)
-                .GroupBy(x => x.ContactInfo.First().Location);
+                .Where(x => x.ContactInfo.Any())
+                  .GroupBy(x => x.ContactInfo.First().Location);
 
             #region Grouping
             if (groupedContacts.Any())
