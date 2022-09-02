@@ -3,14 +3,13 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using ProcessService.Models;
 using Shared.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProcessService
+namespace ProcessService.Services
 {
-    public class ProcessMongoService
+    public class ProcessMongoService : IProcessMongoService
     {
         private readonly IMongoCollection<Report> _reportCollection;
         private readonly IMongoCollection<Contact> _contactCollection;

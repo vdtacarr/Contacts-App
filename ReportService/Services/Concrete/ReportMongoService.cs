@@ -2,16 +2,16 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using ReportService.Services.Concrete;
 using Shared.Events;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReportService.Services.Concrete
+namespace ReportService.Services
 {
-    public class ReportMongoService
+    public class ReportMongoService : IReportMongoService
     {
         private readonly IMongoCollection<Report> _reportCollection;
         public ReportMongoService(IOptions<MongoDbSettingsReport> mongoDBSettings)
@@ -48,6 +48,7 @@ namespace ReportService.Services.Concrete
             return await _reportCollection.Find(new BsonDocument()).ToListAsync();
             
         }
+
         public async Task<Report> GetReportByIdAsync(string id)
         {
             FilterDefinition<Report> filter = Builders<Report>.Filter.Eq("Id", id);

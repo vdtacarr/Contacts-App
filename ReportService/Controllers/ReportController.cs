@@ -1,12 +1,10 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using ReportService.Services.Concrete;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using ReportService.Services;
 
 namespace ReportService.Controllers
 {
@@ -14,10 +12,10 @@ namespace ReportService.Controllers
     [Route("[controller]")]
     public class ReportController : ControllerBase
     {
-        private readonly ReportMongoService _mongoService;
+        private readonly IReportMongoService _mongoService;
         readonly IPublishEndpoint _publishEndpoint;
 
-        public ReportController(ReportMongoService mongoService, IPublishEndpoint publishEndpoint)
+        public ReportController(IReportMongoService mongoService, IPublishEndpoint publishEndpoint)
         {
             _mongoService = mongoService;
             _publishEndpoint = publishEndpoint;

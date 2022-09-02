@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ContactService.Services
 {
-    public class ContactMongoService
+    public class ContactMongoService : IContactMongoService
     {
         private readonly IMongoCollection<Contact> _contactCollection;
         private readonly IMapper _mapper;

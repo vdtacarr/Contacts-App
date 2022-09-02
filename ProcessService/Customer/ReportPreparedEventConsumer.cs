@@ -1,17 +1,14 @@
 ﻿using MassTransit;
-using ProcessService;
+using ProcessService.Services;
 using Shared.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProcessService.Customer
 {
     public class ReportPrepearedEventConsumer : IConsumer<ReportCreatedEvent>
     {
-        readonly ProcessMongoService _mongoService;
-        public ReportPrepearedEventConsumer(ProcessMongoService mongoService)
+        readonly IProcessMongoService _mongoService;
+        public ReportPrepearedEventConsumer(IProcessMongoService mongoService)
         {
             _mongoService = mongoService;
         }

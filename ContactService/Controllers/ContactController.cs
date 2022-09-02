@@ -1,10 +1,8 @@
 ﻿using Shared.Models;
 using ContactService.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ContactService.Services;
 using ContactService.Models.Concrete;
@@ -15,9 +13,9 @@ namespace ContactService.Controllers
     [Route("[controller]")]
     public class ContactController : ControllerBase
     {
-        private readonly ContactMongoService _contactService;
+        private readonly IContactMongoService _contactService;
 
-        public ContactController(ContactMongoService contactService)
+        public ContactController(IContactMongoService contactService)
         {
             _contactService = contactService;
         }

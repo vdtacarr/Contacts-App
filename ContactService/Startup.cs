@@ -31,7 +31,7 @@ namespace ContactService
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<MongoDbSettingsContact>(Configuration.GetSection("MongoDbSettings"));
-            services.AddSingleton<ContactMongoService>();
+            services.AddSingleton<IContactMongoService,ContactMongoService>();
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddSwaggerGen(c =>

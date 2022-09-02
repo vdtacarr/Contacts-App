@@ -1,19 +1,12 @@
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ReportService.Services;
 using ReportService.Services.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 
 namespace ReportService
 {
@@ -30,7 +23,7 @@ namespace ReportService
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<MongoDbSettingsReport>(Configuration.GetSection("MongoDbSettings"));
-            services.AddSingleton<ReportMongoService>();
+            services.AddSingleton<IReportMongoService ,ReportMongoService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
